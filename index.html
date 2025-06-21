@@ -15,6 +15,7 @@
       justify-content: center;
       align-items: center;
       font-family: 'Montserrat', Arial, sans-serif;
+      overflow-x: hidden;
     }
 
     .card {
@@ -29,6 +30,44 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      overflow: hidden;
+    }
+
+    /* Partículas */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.20);
+      animation: float 15s infinite linear;
+      /* Cambia la opacidad para que se vean más */
+      filter: blur(0.5px);
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-100px) translateX(50px) rotate(360deg);
+        opacity: 0;
+      }
     }
 
     .top-bar {
@@ -37,6 +76,8 @@
       align-items: center;
       width: 100%;
       margin-bottom: 18px;
+      position: relative;
+      z-index: 2;
     }
 
     .top-bar button,
@@ -66,6 +107,8 @@
       align-items: center;
       width: 100%;
       margin-bottom: 18px;
+      position: relative;
+      z-index: 2;
     }
 
     .main-img {
@@ -79,6 +122,8 @@
       display: block;
       margin: 0 auto;
       transition: transform 0.25s cubic-bezier(.68, -0.55, .27, 1.55), box-shadow 0.3s cubic-bezier(.68, -0.55, .27, 1.55);
+      position: relative;
+      z-index: 1;
     }
 
     .main-img:hover {
@@ -92,12 +137,16 @@
       font-weight: 700;
       margin-bottom: 4px;
       letter-spacing: 0.2px;
+      z-index: 2;
+      position: relative;
     }
 
     .card-desc {
       color: #f0f1f6;
       font-size: 1.05rem;
       margin-bottom: 20px;
+      z-index: 2;
+      position: relative;
     }
 
     .links {
@@ -106,6 +155,8 @@
       gap: 18px;
       margin-top: 6px;
       flex-wrap: wrap;
+      z-index: 2;
+      position: relative;
     }
 
     .social-link {
@@ -169,6 +220,8 @@
 
 <body>
   <div class="card">
+    <!-- Partículas -->
+    <div class="particles" id="particles"></div>
     <div class="top-bar">
       <button>🔔 Subscribe</button>
       <span class="share"><i class="fas fa-share-alt"></i></span>
@@ -189,6 +242,30 @@
           class="fab fa-x-twitter"></i></a>
     </div>
   </div>
+  <script>
+    // Crear partículas para el fondo
+    document.addEventListener('DOMContentLoaded', function() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 28; // más partículas visibles
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        // Tamaño y posición aleatorios
+        const size = Math.random() * 8 + 3; // más grandes
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        const delay = Math.random() * 15;
+        const duration = 10 + Math.random() * 10;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${posX}%`;
+        particle.style.top = `${posY}%`;
+        particle.style.animationDelay = `${delay}s`;
+        particle.style.animationDuration = `${duration}s`;
+        particlesContainer.appendChild(particle);
+      }
+    });
+  </script>
 </body>
 
 </html>
